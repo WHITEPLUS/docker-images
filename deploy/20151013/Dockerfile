@@ -17,5 +17,6 @@ RUN /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
  && pip install \
  awscli \
  awsebcli \
+ Flask \
  && go get github.com/robfig/glock \
  && go get github.com/WHITEPLUS/gracefresh
