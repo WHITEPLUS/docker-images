@@ -16,7 +16,7 @@ RUN /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
  php5-xdebug \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
- && curl -kL https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python \
+ && curl -kL https://bootstrap.pypa.io/get-pip.py | python \
  && pip install awscli \
  && pip install awsebcli \
  && pip install Flask \
