@@ -7,7 +7,7 @@ RUN /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
  && sed -i "s/jessie main/jessie main contrib non-free/" /etc/apt/sources.list \
  && apt-get update 1> /dev/null \
  && apt-get upgrade -y -q --no-install-recommends \
- && apt-get install -y -Dockerfile-no-install-recommends \
+ && apt-get install -y --no-install-recommends \
  pkg-config \
  git \
  curl \
