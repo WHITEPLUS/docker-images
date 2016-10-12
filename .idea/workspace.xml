@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="63233bd3-c678-4a11-8429-874ebf1ffbb0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deploy/20161012/Dockerfile" afterPath="$PROJECT_DIR$/deploy/20161012/Dockerfile" />
-    </list>
+    <list default="true" id="63233bd3-c678-4a11-8429-874ebf1ffbb0" name="Default" comment="" />
     <ignored path="docker-images.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -934,7 +932,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="13" y="23" width="1680" height="1002" extended-state="1" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
