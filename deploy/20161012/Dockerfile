@@ -1,6 +1,8 @@
-FROM buildpack-deps:jessie-scm
+FROM buildpack-deps:jessie
 
 MAINTAINER WHITEPLUS System "sysadmin@wh-plus.com"
+
+RUN ls -l /usr && ls -l /usr/local
 
 # Ref: https://hub.docker.com/_/nginx/
 # Ref: https://hub.docker.com/_/php/
@@ -42,11 +44,17 @@ RUN /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
  # CA-Certificates
  ca-certificates \
  # Tools
- pkg-config curl zip jq vim \
+ git pkg-config curl zip jq vim \
  # PHP5
  php5-fpm php5-mysql php-apc php5-curl php5-gd php5-intl php5-mcrypt php5-memcache \
  php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5-pgsql php5-mongo libapache2-mod-php5 \
  php5-xdebug \
+ # Python
+ python2.7-dev \
+ && curl -kL https://bootstrap.pypa.io/get-pip.py | python \
+ && pip install awscli \
+ && pip install awsebcli \
+ && pip install Flask \
  # NODE
  && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
  && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
@@ -55,17 +63,12 @@ RUN /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
  && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
  && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
  && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
- # Python
- && curl -kL https://bootstrap.pypa.io/get-pip.py | python \
- && pip install awscli \
- && pip install awsebcli \
- && pip install Flask \
  # Golang
  && curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
  && echo "$GOLANG_DOWNLOAD_SHA256  golang.tar.gz" | sha256sum -c - \
  && tar -C /usr/local -xzf golang.tar.gz \
  && rm golang.tar.gz \
- && mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
+ && mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH" \
  && go get github.com/robfig/glock \
  && go get github.com/WHITEPLUS/gracefresh \
  && go get github.com/constabulary/gb/... \
@@ -75,7 +78,4 @@ RUN /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-
 WORKDIR $GOPATH
-
-COPY go-wrapper /usr/local/bin/
