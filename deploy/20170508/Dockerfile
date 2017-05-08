@@ -93,12 +93,14 @@ RUN set -ex \
   && mv yarn.js /usr/local/bin/yarn \
   && chmod +x /usr/local/bin/yarn
 
+## Set up Composer enviroment
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
 ENV COMPOSER_VERSION 1.4.1
 ENV PRESTISSIMO_VERSION ^0.3
 
+## Install Composer
 RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/composer/getcomposer.org/da290238de6d63faace0343efbdd5aa9354332c5/web/installer \
  && php -r " \
     \$signature = '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410'; \
@@ -111,7 +113,7 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
  && php /tmp/installer.php --no-ansi --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} \
  && rm /tmp/installer.php \
  && composer --ansi --version --no-interaction \
- # Composer - Add packagist.jp
- && composer config -g repositories.packagist composer https://packagist.jp \
- # Composer - Install prestissimo
- && composer global require "hirak/prestissimo:$PRESTISSIMO_VERSION"
+ # Add packagist.jp
+ && composer config --global --no-interaction repositories.packagist composer https://packagist.jp \
+ # Install prestissimo
+ && composer global require --no-interaction "hirak/prestissimo:$PRESTISSIMO_VERSION"
