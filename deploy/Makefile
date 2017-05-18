@@ -1,11 +1,14 @@
 NAME      := deploy
 REGISTRY  := whiteplus/$(NAME)
-VERSION   := 20170303
+VERSION   := 20170517
 
 .PHONY: build tag push
 
 build:
-	docker build -t $(NAME):$(VERSION) ./$(VERSION)
+	cd $(VERSION); docker build -t $(NAME):$(VERSION) .
+
+run:
+	docker run -it $(NAME):$(VERSION) bash
 
 tag: build
 	docker tag $(NAME):$(VERSION) $(REGISTRY):$(VERSION)

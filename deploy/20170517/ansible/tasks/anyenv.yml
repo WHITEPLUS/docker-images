@@ -1,0 +1,39 @@
+- set_fact: date="{{lookup('pipe','date +%Y%m%d')}}"
+
+- name: Install anyenv
+  git: repo={{ item.repo }} dest={{ item.dest }} update=no
+  with_items:
+    - { repo: 'https://github.com/riywo/anyenv',          dest: '~/.anyenv' }
+    - { repo: 'https://github.com/znz/anyenv-update.git', dest: '~/.anyenv/plugins/anyenv-update' }
+    - { repo: 'https://github.com/znz/anyenv-git.git',    dest: '~/.anyenv/plugins/anyenv-git' }
+
+- name: Update anyenv
+  shell: |
+      eval "$(anyenv init -)"
+      anyenv update
+      rm -f /tmp/anyenv-updated-*
+      touch /tmp/anyenv-updated-{{ date }}
+  args:
+      executable: /bin/bash
+      creates: /tmp/anyenv-updated-{{ date }}
+
+- name: Install envs
+  shell: |
+      eval "$(anyenv init -)"
+      anyenv install {{ item.env }}
+      eval "$(anyenv init -)"
+      {{ item.env }} install {{ item.version  }}
+      {{ item.env }} rehash
+  args:
+      executable: /bin/bash
+      creates: ~/.anyenv/envs/{{ item.env }}/versions/{{ item.version  }}
+  with_items:
+    - { env: 'ndenv',  version: '{{ lang.node.version }}' }
+    - { env: 'pyenv',  version: '{{ lang.python3.version }}'  }
+    - { env: 'phpenv', version: '{{ lang.php.version }}' }
+
+- name: Install pyenv-virtualenv
+  git: 
+    repo: 'https://github.com/yyuu/pyenv-virtualenv'
+    dest: '~/.anyenv/envs/pyenv/plugins/pyenv-virtualenv'
+    update: no
