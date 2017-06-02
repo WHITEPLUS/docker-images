@@ -1,0 +1,3 @@
+headless chromeを動かす
+pyenvでselenium動かす
+composerの初期設定
