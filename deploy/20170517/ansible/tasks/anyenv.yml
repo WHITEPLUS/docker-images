@@ -37,3 +37,12 @@
     repo: 'https://github.com/yyuu/pyenv-virtualenv'
     dest: '~/.anyenv/envs/pyenv/plugins/pyenv-virtualenv'
     update: no
+
+- name: Setup pyenvs
+  shell: |
+      eval "$(anyenv init -)"
+      pyenv virtualenv {{ lang.python3.version }} e2e
+      pyenv local e2e
+      pip install -r tasks/pyenv_require_e2e.txt
+  args:
+      executable: /bin/bash

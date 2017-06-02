@@ -12,7 +12,6 @@ RUN /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
  python python-yaml \
  python-pip python-dev libffi-dev \
  libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng12-dev libtidy-dev libssl-dev \
- apt-transport-https ttf-wqy-zenhei ttf-unfonts-core \
  \
  && apt-get -y --purge remove python-cffi \
  \
@@ -25,13 +24,6 @@ RUN /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
  \
  && apt-get clean \
  \
- && rm -rf /var/lib/apt/lists/* /var/cache/apt/* /tmp/*
-
-RUN curl -q https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
- && echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >| /etc/apt/sources.list.d/google-chrome.list \
- && apt-get update -qqy \
- && apt-get -qqy install google-chrome-unstable \
- && rm /etc/apt/sources.list.d/google-chrome.list \
  && rm -rf /var/lib/apt/lists/* /var/cache/apt/* /tmp/*
 
 ENV YARN_VERSION 0.21.3
