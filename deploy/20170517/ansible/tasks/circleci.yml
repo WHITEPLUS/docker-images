@@ -1,0 +1,11 @@
+- name: Set anyenv globals
+  shell: |
+      eval "$(anyenv init -)"
+      {{ item.env }} global {{ item.version  }}
+  args:
+      executable: /bin/bash
+  with_items:
+    - { env: 'ndenv',  version: '{{ lang.node.version }}' }
+    - { env: 'pyenv',  version: '{{ lang.python3.version }}'  }
+    - { env: 'phpenv', version: '{{ lang.php.version }}' }
+

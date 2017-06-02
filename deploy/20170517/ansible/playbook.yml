@@ -1,0 +1,22 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+  tasks:
+    - { command: echo "$PATH", register: default_path }
+    - { command: echo "$HOME", register: default_home }
+    - { command: echo "$HOME/.anyenv", register: anyenv_home }
+
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+  environment:
+    ANY_ENV_HOME: "{{ anyenv_home.stdout }}"
+    PATH: "{{ anyenv_home.stdout }}/bin:{{ default_path.stdout }}"
+  tasks:
+    - include_vars:
+        file: vars/lang.yml
+        name: lang
+    - include: tasks/anyenv.yml
+    - include: tasks/circleci.yml
